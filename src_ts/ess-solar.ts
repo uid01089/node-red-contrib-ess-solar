@@ -32,15 +32,8 @@ const func = (RED: Red) => {
 
 
 
-            await essSolar.readInData();
-
-
-
-            //const message = { payload: JSON.stringify(zbReceived[messageId]) };
-            //send(message);
-
-
-
+            const message = await essSolar.readInData();
+            send({ payload: message });
 
 
             // Once finished, call 'done'.

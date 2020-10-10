@@ -38,7 +38,7 @@ class EssSolar {
             const commonInfo = await this.readEssCommonInfo();
             dbElements.push(InfluxDBEssCommonInfoPVImpl.getInfluxDB(commonInfo.PV));
 
-            console.log();
+
         }
 
         return dbElements;
