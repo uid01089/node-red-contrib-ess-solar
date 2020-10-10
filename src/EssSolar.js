@@ -11,7 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EssSolar = void 0;
 require("node-fetch");
-//const fetch = require("node-fetch");
+const InfluxDBEssCommonInfo_1 = require("./InfluxDBEssCommonInfo");
+const fetch = require("node-fetch");
 //see https://github.com/gluap/pyess/blob/master/pyess/constants.py
 class EssSolar {
     constructor(addr, passwd) {
@@ -21,14 +22,16 @@ class EssSolar {
     }
     readInData() {
         return __awaiter(this, void 0, void 0, function* () {
+            const dbElements = [];
             const loginSuccessful = yield this.readAuthData();
             if (loginSuccessful) {
                 const essInfo = yield this.readEssInfo();
                 const systemInfo = yield this.readEssSystemInfo();
                 const battInfo = yield this.readEssBattInfo();
                 const commonInfo = yield this.readEssCommonInfo();
-                console.log();
+                dbElements.push(InfluxDBEssCommonInfo_1.InfluxDBEssCommonInfoPVImpl.getInfluxDB(commonInfo.PV));
             }
+            return dbElements;
         });
     }
     readAuthData() {

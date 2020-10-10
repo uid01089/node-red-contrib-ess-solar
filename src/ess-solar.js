@@ -28,9 +28,8 @@ const func = (RED) => {
                 // fallback to using `node.send`
                 send = send || function () { node.send.apply(node, arguments); };
                 const essSolar = (node.essSolar);
-                yield essSolar.readInData();
-                //const message = { payload: JSON.stringify(zbReceived[messageId]) };
-                //send(message);
+                const message = yield essSolar.readInData();
+                send({ payload: message });
                 // Once finished, call 'done'.
                 // This call is wrapped in a check that 'done' exists
                 // so the node will work in earlier versions of Node-RED (<1.0)
