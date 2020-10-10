@@ -7,18 +7,18 @@ interface EssCommonInfo {
 }
 interface EssCommonInfoPV {
     brand: string;
-    capacity: number;
-    pv1_voltage: number;
-    pv2_voltage: number;
-    pv3_voltage: number;
-    pv1_power: number;
-    pv2_power: number;
-    pv3_power: number;
-    pv1_current: number;
-    pv2_current: number;
-    pv3_current: number;
-    today_pv_generation_sum: number;
-    today_month_pv_generation_sum: number;
+    capacity: string;
+    pv1_voltage: string;
+    pv2_voltage: string;
+    pv3_voltage: string;
+    pv1_power: string;
+    pv2_power: string;
+    pv3_power: string;
+    pv1_current: string;
+    pv2_current: string;
+    pv3_current: string;
+    today_pv_generation_sum: string;
+    today_month_pv_generation_sum: string;
 }
 interface EssCommonInfoBATT {
     status: string;
