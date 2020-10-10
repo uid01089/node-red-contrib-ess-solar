@@ -17,7 +17,7 @@ class InfluxDBEssCommonInfoPVImpl {
 
     public static getInfluxDB(essCommonInfo: EssCommonInfoPV): InfluxDBEssCommonInfoPV {
         const influxElement: InfluxDBEssCommonInfoPV = {
-            Measurement: "EssCommonInfoPV",
+            measurement: "EssCommonInfoPV",
             fields: {
                 pv1_voltage: essCommonInfo.pv1_voltage,
                 pv2_voltage: essCommonInfo.pv2_voltage,

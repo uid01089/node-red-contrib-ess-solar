@@ -1,6 +1,6 @@
 
 interface InfluxDBBatchElement {
-    Measurement: string;
+    measurement: string;
     fields: FieldsObject;
     tags?: TagsObject;
     timestamp?: Date;

@@ -29,7 +29,7 @@ class EssSolar {
                 const systemInfo = yield this.readEssSystemInfo();
                 const battInfo = yield this.readEssBattInfo();
                 const commonInfo = yield this.readEssCommonInfo();
-                dbElements.push(JSON.stringify(InfluxDBEssCommonInfo_1.InfluxDBEssCommonInfoPVImpl.getInfluxDB(commonInfo.PV)));
+                dbElements.push(InfluxDBEssCommonInfo_1.InfluxDBEssCommonInfoPVImpl.getInfluxDB(commonInfo.PV));
             }
             return dbElements;
         });
