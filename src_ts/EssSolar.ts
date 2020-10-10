@@ -23,9 +23,9 @@ class EssSolar {
 
     }
 
-    async readInData(): Promise<InfluxDBBatchElement[]> {
+    async readInData(): Promise<string[]> {
 
-        const dbElements: InfluxDBBatchElement[] = [];
+        const dbElements: string[] = [];
 
         const loginSuccessful = await this.readAuthData();
         if (loginSuccessful) {
@@ -36,7 +36,7 @@ class EssSolar {
             const battInfo = await this.readEssBattInfo();
 
             const commonInfo = await this.readEssCommonInfo();
-            dbElements.push(InfluxDBEssCommonInfoPVImpl.getInfluxDB(commonInfo.PV));
+            dbElements.push(JSON.stringify(InfluxDBEssCommonInfoPVImpl.getInfluxDB(commonInfo.PV)));
 
 
         }
