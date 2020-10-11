@@ -5,6 +5,8 @@ import { EssSystemInfo } from "./EssSystemInfo";
 import "node-fetch"
 import { InfluxDBBatchElement } from "./InfluxDBBatchElement";
 import { InfluxDBEssCommonInfoPVImpl } from "./InfluxDBEssCommonInfo";
+import { InfluxDBEssInfoStatisticsImpl } from "./InfluxDBEssInfoStatistics";
+import { InfluxDBEssInfoDirectionImpl } from "./InfluxDBEssInfoDirection";
 const fetch = require("node-fetch");
 
 //see https://github.com/gluap/pyess/blob/master/pyess/constants.py
@@ -30,6 +32,8 @@ class EssSolar {
         const loginSuccessful = await this.readAuthData();
         if (loginSuccessful) {
             const essInfo = await this.readEssInfo();
+            dbElements.push(InfluxDBEssInfoStatisticsImpl.getInfluxDB(essInfo.statistics));
+            dbElements.push(InfluxDBEssInfoDirectionImpl.getInfluxDB(essInfo.direction));
 
             const systemInfo = await this.readEssSystemInfo();
 

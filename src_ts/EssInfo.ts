@@ -61,5 +61,5 @@ interface EssInfoEvcharger {
 }
 
 
-export { EssInfo };
+export { EssInfo, EssInfoStatistics, EssInfoDirection };
 

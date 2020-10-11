@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EssSolar = void 0;
 require("node-fetch");
 const InfluxDBEssCommonInfo_1 = require("./InfluxDBEssCommonInfo");
+const InfluxDBEssInfoStatistics_1 = require("./InfluxDBEssInfoStatistics");
+const InfluxDBEssInfoDirection_1 = require("./InfluxDBEssInfoDirection");
 const fetch = require("node-fetch");
 //see https://github.com/gluap/pyess/blob/master/pyess/constants.py
 class EssSolar {
@@ -26,6 +28,8 @@ class EssSolar {
             const loginSuccessful = yield this.readAuthData();
             if (loginSuccessful) {
                 const essInfo = yield this.readEssInfo();
+                dbElements.push(InfluxDBEssInfoStatistics_1.InfluxDBEssInfoStatisticsImpl.getInfluxDB(essInfo.statistics));
+                dbElements.push(InfluxDBEssInfoDirection_1.InfluxDBEssInfoDirectionImpl.getInfluxDB(essInfo.direction));
                 const systemInfo = yield this.readEssSystemInfo();
                 const battInfo = yield this.readEssBattInfo();
                 const commonInfo = yield this.readEssCommonInfo();
