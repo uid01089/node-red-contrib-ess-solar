@@ -3,13 +3,13 @@ import { InfluxDBBatchElement } from "./InfluxDBBatchElement";
 
 interface InfluxDBEEssInfoDirection extends InfluxDBBatchElement {
     fields: {
-        is_direct_consuming_: boolean;
-        is_battery_charging_: boolean;
-        is_battery_discharging_: boolean;
-        is_grid_selling_: boolean;
-        is_grid_buying_: boolean;
-        is_charging_from_grid_: boolean;
-        is_discharging_to_grid_: boolean;
+        is_direct_consuming_: number;
+        is_battery_charging_: number;
+        is_battery_discharging_: number;
+        is_grid_selling_: number;
+        is_grid_buying_: number;
+        is_charging_from_grid_: number;
+        is_discharging_to_grid_: number;
     }
 }
 
@@ -20,13 +20,13 @@ class InfluxDBEssInfoDirectionImpl {
         const influxElement: InfluxDBEEssInfoDirection = {
             measurement: "EssInfoDirection",
             fields: {
-                is_direct_consuming_: (essCommonInfo.is_direct_consuming_ === '1'),
-                is_battery_charging_: (essCommonInfo.is_battery_charging_ === '1'),
-                is_battery_discharging_: (essCommonInfo.is_battery_discharging_ === '1'),
-                is_grid_selling_: (essCommonInfo.is_grid_selling_ === '1'),
-                is_grid_buying_: (essCommonInfo.is_grid_buying_ === '1'),
-                is_charging_from_grid_: (essCommonInfo.is_charging_from_grid_ === '1'),
-                is_discharging_to_grid_: (essCommonInfo.is_discharging_to_grid_ === '1'),
+                is_direct_consuming_: parseInt(essCommonInfo.is_direct_consuming_),
+                is_battery_charging_: parseInt(essCommonInfo.is_battery_charging_),
+                is_battery_discharging_: parseInt(essCommonInfo.is_battery_discharging_),
+                is_grid_selling_: parseInt(essCommonInfo.is_grid_selling_),
+                is_grid_buying_: parseInt(essCommonInfo.is_grid_buying_),
+                is_charging_from_grid_: parseInt(essCommonInfo.is_charging_from_grid_),
+                is_discharging_to_grid_: parseInt(essCommonInfo.is_discharging_to_grid_),
 
             }
         }
