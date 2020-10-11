@@ -28,8 +28,8 @@ class EssSolar {
             const loginSuccessful = yield this.readAuthData();
             if (loginSuccessful) {
                 const essInfo = yield this.readEssInfo();
-                dbElements.push(InfluxDBEssInfoStatistics_1.InfluxDBEssInfoStatisticsImpl.getInfluxDB(essInfo.statistics));
                 dbElements.push(InfluxDBEssInfoDirection_1.InfluxDBEssInfoDirectionImpl.getInfluxDB(essInfo.direction));
+                dbElements.push(InfluxDBEssInfoStatistics_1.InfluxDBEssInfoStatisticsImpl.getInfluxDB(essInfo.statistics, essInfo.direction));
                 const systemInfo = yield this.readEssSystemInfo();
                 const battInfo = yield this.readEssBattInfo();
                 const commonInfo = yield this.readEssCommonInfo();

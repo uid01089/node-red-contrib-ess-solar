@@ -16,17 +16,17 @@ interface InfluxDBEEssInfoDirection extends InfluxDBBatchElement {
 class InfluxDBEssInfoDirectionImpl {
 
 
-    public static getInfluxDB(essCommonInfo: EssInfoDirection): InfluxDBEEssInfoDirection {
+    public static getInfluxDB(essInfoDirection: EssInfoDirection): InfluxDBEEssInfoDirection {
         const influxElement: InfluxDBEEssInfoDirection = {
             measurement: "EssInfoDirection",
             fields: {
-                is_direct_consuming_: parseInt(essCommonInfo.is_direct_consuming_),
-                is_battery_charging_: parseInt(essCommonInfo.is_battery_charging_),
-                is_battery_discharging_: parseInt(essCommonInfo.is_battery_discharging_),
-                is_grid_selling_: parseInt(essCommonInfo.is_grid_selling_),
-                is_grid_buying_: parseInt(essCommonInfo.is_grid_buying_),
-                is_charging_from_grid_: parseInt(essCommonInfo.is_charging_from_grid_),
-                is_discharging_to_grid_: parseInt(essCommonInfo.is_discharging_to_grid_),
+                is_direct_consuming_: parseInt(essInfoDirection.is_direct_consuming_),
+                is_battery_charging_: parseInt(essInfoDirection.is_battery_charging_),
+                is_battery_discharging_: parseInt(essInfoDirection.is_battery_discharging_),
+                is_grid_selling_: parseInt(essInfoDirection.is_grid_selling_),
+                is_grid_buying_: parseInt(essInfoDirection.is_grid_buying_),
+                is_charging_from_grid_: parseInt(essInfoDirection.is_charging_from_grid_),
+                is_discharging_to_grid_: parseInt(essInfoDirection.is_discharging_to_grid_),
 
             }
         }

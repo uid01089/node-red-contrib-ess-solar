@@ -2,15 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InfluxDBEssInfoStatisticsImpl = void 0;
 class InfluxDBEssInfoStatisticsImpl {
-    static getInfluxDB(essCommonInfo) {
+    static getInfluxDB(essCommonInfo, essInfoDirection) {
+        const isBatteryCharing = (essInfoDirection.is_battery_charging_ === '1');
+        const isGridBuying = (essInfoDirection.is_grid_buying_ === '1');
         const influxElement = {
             measurement: "EssInfoStatistics",
             fields: {
                 pcs_pv_total_power: parseFloat(essCommonInfo.pcs_pv_total_power),
-                batconv_power: parseFloat(essCommonInfo.batconv_power),
-                load_power: parseFloat(essCommonInfo.load_power),
-                ac_output_power: parseFloat(essCommonInfo.ac_output_power),
-                grid_power: parseFloat(essCommonInfo.grid_power),
+                batconv_power: parseFloat(essCommonInfo.batconv_power) * (isBatteryCharing ? -1 : +1),
+                load_power: parseFloat(essCommonInfo.load_power) * (-1),
+                grid_power: parseFloat(essCommonInfo.grid_power) * (isGridBuying ? +1 : -1),
             }
         };
         return influxElement;

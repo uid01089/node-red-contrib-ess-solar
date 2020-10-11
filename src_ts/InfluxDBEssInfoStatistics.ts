@@ -1,4 +1,4 @@
-import { EssInfoStatistics } from "./EssInfo";
+import { EssInfoDirection, EssInfoStatistics } from "./EssInfo";
 import { InfluxDBBatchElement } from "./InfluxDBBatchElement";
 
 interface InfluxDBEEssInfoStatistics extends InfluxDBBatchElement {
@@ -6,7 +6,6 @@ interface InfluxDBEEssInfoStatistics extends InfluxDBBatchElement {
         pcs_pv_total_power: number;
         batconv_power: number;
         load_power: number;
-        ac_output_power: number;
         grid_power: number;
     }
 }
@@ -14,15 +13,19 @@ interface InfluxDBEEssInfoStatistics extends InfluxDBBatchElement {
 class InfluxDBEssInfoStatisticsImpl {
 
 
-    public static getInfluxDB(essCommonInfo: EssInfoStatistics): InfluxDBEEssInfoStatistics {
+    public static getInfluxDB(essCommonInfo: EssInfoStatistics, essInfoDirection: EssInfoDirection): InfluxDBEEssInfoStatistics {
+
+        const isBatteryCharing = (essInfoDirection.is_battery_charging_ === '1');
+        const isGridBuying = (essInfoDirection.is_grid_buying_ === '1');
+
+
         const influxElement: InfluxDBEEssInfoStatistics = {
             measurement: "EssInfoStatistics",
             fields: {
                 pcs_pv_total_power: parseFloat(essCommonInfo.pcs_pv_total_power),
-                batconv_power: parseFloat(essCommonInfo.batconv_power),
-                load_power: parseFloat(essCommonInfo.load_power),
-                ac_output_power: parseFloat(essCommonInfo.ac_output_power),
-                grid_power: parseFloat(essCommonInfo.grid_power),
+                batconv_power: parseFloat(essCommonInfo.batconv_power) * (isBatteryCharing ? -1 : +1),
+                load_power: parseFloat(essCommonInfo.load_power) * (-1), //Load is always negative
+                grid_power: parseFloat(essCommonInfo.grid_power) * (isGridBuying ? +1 : -1),
 
             }
         }

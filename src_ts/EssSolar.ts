@@ -32,8 +32,8 @@ class EssSolar {
         const loginSuccessful = await this.readAuthData();
         if (loginSuccessful) {
             const essInfo = await this.readEssInfo();
-            dbElements.push(InfluxDBEssInfoStatisticsImpl.getInfluxDB(essInfo.statistics));
             dbElements.push(InfluxDBEssInfoDirectionImpl.getInfluxDB(essInfo.direction));
+            dbElements.push(InfluxDBEssInfoStatisticsImpl.getInfluxDB(essInfo.statistics, essInfo.direction));
 
             const systemInfo = await this.readEssSystemInfo();
 
