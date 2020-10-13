@@ -1,4 +1,4 @@
-import { EssCommonInfoPV } from "./EssCommonInfo";
+import { EssCommonInfoBATT, EssCommonInfoPV } from "./EssCommonInfo";
 import { InfluxDBBatchElement } from "./InfluxDBBatchElement";
 
 interface InfluxDBEssCommonInfoPV extends InfluxDBBatchElement {
@@ -9,6 +9,12 @@ interface InfluxDBEssCommonInfoPV extends InfluxDBBatchElement {
         pv2_power: number;
         pv1_current: number;
         pv2_current: number;
+    }
+}
+
+interface InfluxDBEssCommonInfoBATT extends InfluxDBBatchElement {
+    fields: {
+        soc: number;
     }
 }
 
@@ -32,4 +38,21 @@ class InfluxDBEssCommonInfoPVImpl {
     }
 }
 
-export { InfluxDBEssCommonInfoPVImpl, InfluxDBEssCommonInfoPV };
+class InfluxDBEssCommonInfoBATTImpl {
+
+
+    public static getInfluxDB(essCommonInfo: EssCommonInfoBATT): InfluxDBEssCommonInfoBATT {
+        const influxElement: InfluxDBEssCommonInfoBATT = {
+            measurement: "EssCommonInfoBATT",
+            fields: {
+                soc: parseFloat(essCommonInfo.soc),
+
+            }
+        }
+        return influxElement;
+    }
+}
+
+
+
+export { InfluxDBEssCommonInfoPVImpl, InfluxDBEssCommonInfoPV, InfluxDBEssCommonInfoBATTImpl, InfluxDBEssCommonInfoBATT };

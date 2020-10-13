@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InfluxDBEssCommonInfoPVImpl = void 0;
+exports.InfluxDBEssCommonInfoBATTImpl = exports.InfluxDBEssCommonInfoPVImpl = void 0;
 class InfluxDBEssCommonInfoPVImpl {
     static getInfluxDB(essCommonInfo) {
         const influxElement = {
@@ -18,4 +18,16 @@ class InfluxDBEssCommonInfoPVImpl {
     }
 }
 exports.InfluxDBEssCommonInfoPVImpl = InfluxDBEssCommonInfoPVImpl;
+class InfluxDBEssCommonInfoBATTImpl {
+    static getInfluxDB(essCommonInfo) {
+        const influxElement = {
+            measurement: "EssCommonInfoBATT",
+            fields: {
+                soc: parseFloat(essCommonInfo.soc),
+            }
+        };
+        return influxElement;
+    }
+}
+exports.InfluxDBEssCommonInfoBATTImpl = InfluxDBEssCommonInfoBATTImpl;
 //# sourceMappingURL=InfluxDBEssCommonInfo.js.map

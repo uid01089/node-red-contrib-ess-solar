@@ -4,7 +4,7 @@ import { EssInfo } from "./EssInfo";
 import { EssSystemInfo } from "./EssSystemInfo";
 import "node-fetch"
 import { InfluxDBBatchElement } from "./InfluxDBBatchElement";
-import { InfluxDBEssCommonInfoPVImpl } from "./InfluxDBEssCommonInfo";
+import { InfluxDBEssCommonInfoBATTImpl, InfluxDBEssCommonInfoPVImpl } from "./InfluxDBEssCommonInfo";
 import { InfluxDBEssInfoStatisticsImpl } from "./InfluxDBEssInfoStatistics";
 import { InfluxDBEssInfoDirectionImpl } from "./InfluxDBEssInfoDirection";
 const fetch = require("node-fetch");
@@ -41,6 +41,7 @@ class EssSolar {
 
             const commonInfo = await this.readEssCommonInfo();
             dbElements.push(InfluxDBEssCommonInfoPVImpl.getInfluxDB(commonInfo.PV));
+            dbElements.push(InfluxDBEssCommonInfoBATTImpl.getInfluxDB(commonInfo.BATT));
 
 
         }

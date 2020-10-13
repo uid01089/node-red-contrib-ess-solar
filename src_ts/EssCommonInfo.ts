@@ -67,4 +67,4 @@ interface EssCommonInfoPCS {
     operation_mode: string;
 }
 
-export { EssCommonInfo, EssCommonInfoPV };
+export { EssCommonInfo, EssCommonInfoPV, EssCommonInfoBATT };
