@@ -25,6 +25,22 @@ class EssSolar {
 
     }
 
+    static getData(batch: InfluxDBBatchElement[], measurement: string, parameter: string): number {
+
+        let returnValue: number = undefined;
+
+        for (const element of batch) {
+            if (element.measurement === measurement) {
+                const fields = element.fields;
+                returnValue = <number>fields[parameter];
+
+                break;
+            }
+        }
+
+        return returnValue;
+    }
+
     async readInData(): Promise<InfluxDBBatchElement[]> {
 
         const dbElements: InfluxDBBatchElement[] = [];

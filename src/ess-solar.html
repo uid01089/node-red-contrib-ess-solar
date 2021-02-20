@@ -10,7 +10,7 @@
             passwd: { value: "" },
         },
         inputs: 1,
-        outputs: 1,
+        outputs: 3,
         icon: "file.png",
         label: function () {
             return this.name || "ess-solar";
@@ -50,7 +50,19 @@
     </p>
     <h3>Outputs</h3>
      <ol class="node-ports">
-         <li>Standard output
+        <li>InfluxDb
+             <dl class="message-properties">
+                 <dt>Payload <span class="property-type">string</span></dt>
+                 <dd>the standard output of the command.</dd>
+             </dl>
+         </li>
+        <li>Grid
+             <dl class="message-properties">
+                 <dt>Payload <span class="property-type">string</span></dt>
+                 <dd>the standard output of the command.</dd>
+             </dl>
+         </li>
+        <li>SOC
              <dl class="message-properties">
                  <dt>Payload <span class="property-type">string</span></dt>
                  <dd>the standard output of the command.</dd>

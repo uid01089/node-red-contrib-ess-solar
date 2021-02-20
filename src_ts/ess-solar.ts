@@ -32,8 +32,14 @@ const func = (RED: Red) => {
 
 
 
+
             const message = await essSolar.readInData();
-            send({ payload: message });
+            const gridPower = EssSolar.getData(message, "EssInfoStatistics", "grid_power");
+            const soc = EssSolar.getData(message, "EssCommonInfoBATT", "soc");
+
+
+
+            send([{ payload: message }, { payload: gridPower }, { payload: soc }]);
 
 
             // Once finished, call 'done'.

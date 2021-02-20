@@ -22,6 +22,17 @@ class EssSolar {
         this.passwd = passwd;
         this.sessionKey = "";
     }
+    static getData(batch, measurement, parameter) {
+        let returnValue = undefined;
+        for (const element of batch) {
+            if (element.measurement === measurement) {
+                const fields = element.fields;
+                returnValue = fields[parameter];
+                break;
+            }
+        }
+        return returnValue;
+    }
     readInData() {
         return __awaiter(this, void 0, void 0, function* () {
             const dbElements = [];
