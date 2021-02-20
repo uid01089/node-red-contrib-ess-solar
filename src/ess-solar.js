@@ -29,9 +29,19 @@ const func = (RED) => {
                 send = send || function () { node.send.apply(node, arguments); };
                 const essSolar = (node.essSolar);
                 const message = yield essSolar.readInData();
+                const batConvPower = EssSolar_1.EssSolar.getData(message, "EssInfoStatistics", "batconv_power");
                 const gridPower = EssSolar_1.EssSolar.getData(message, "EssInfoStatistics", "grid_power");
+                const loadPower = EssSolar_1.EssSolar.getData(message, "EssInfoStatistics", "load_power");
+                const pcs_pv_total_power = EssSolar_1.EssSolar.getData(message, "EssInfoStatistics", "pcs_pv_total_power");
                 const soc = EssSolar_1.EssSolar.getData(message, "EssCommonInfoBATT", "soc");
-                send([{ payload: message }, { payload: gridPower }, { payload: soc }]);
+                send([
+                    { payload: message },
+                    { payload: batConvPower },
+                    { payload: gridPower },
+                    { payload: loadPower },
+                    { payload: pcs_pv_total_power },
+                    { payload: soc }
+                ]);
                 // Once finished, call 'done'.
                 // This call is wrapped in a check that 'done' exists
                 // so the node will work in earlier versions of Node-RED (<1.0)
