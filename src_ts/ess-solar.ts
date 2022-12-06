@@ -1,15 +1,26 @@
-import { Node, Red, NodeProperties } from "node-red";
+import { NodeProperties, Red, Node } from "./node-red-types"
 import { EssSolar } from "./EssSolar";
 
-const func = (RED: Red) => {
-    const essSolar = function (config: NodeProperties) {
+interface MyNodeProperties extends NodeProperties {
+    addr: string;
+    passwd: string;
+}
 
-        this.addr = (config as any).addr;
-        this.passwd = (config as any).passwd;
+interface MyNode extends Node {
+    addr: string;
+    passwd: string;
+    essSolar: EssSolar;
+}
+const func = (RED: Red) => {
+    const essSolar = function (config: MyNodeProperties) {
+
+        this.addr = config.addr;
+        this.passwd = config.passwd;
 
         this.essSolar = new EssSolar(this.addr, this.passwd);
 
-        const node: Node = this;
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const node: MyNode = this;
 
 
 
@@ -21,38 +32,43 @@ const func = (RED: Red) => {
          * to receive messages from the up-stream nodes in a flow.
         */
         node.on("input", async function (msg, send, done) {
+            try {
+                // For maximum backwards compatibility, check that send exists.
+                // If this node is installed in Node-RED 0.x, it will need to
+                // fallback to using `node.send`
+                // eslint-disable-next-line prefer-spread, prefer-rest-params
+                send = send || function () { node.send.apply(node, arguments) }
 
-            // For maximum backwards compatibility, check that send exists.
-            // If this node is installed in Node-RED 0.x, it will need to
-            // fallback to using `node.send`
-            send = send || function () { node.send.apply(node, arguments) }
-
-            const essSolar = ((node as any).essSolar) as EssSolar;
-
-
-
-
-
-            const message = await essSolar.readInData();
-            const batConvPower = EssSolar.getData(message, "EssInfoStatistics", "batconv_power");
-            const gridPower = EssSolar.getData(message, "EssInfoStatistics", "grid_power");
-            const loadPower = EssSolar.getData(message, "EssInfoStatistics", "load_power");
-            const pcs_pv_total_power = EssSolar.getData(message, "EssInfoStatistics", "pcs_pv_total_power");
-            const soc = EssSolar.getData(message, "EssCommonInfoBATT", "soc");
+                const essSolar = node.essSolar;
 
 
 
 
-            send([
-                { payload: message },
-                { payload: batConvPower },
-                { payload: gridPower },
-                { payload: loadPower },
-                { payload: pcs_pv_total_power },
-                { payload: soc }
 
-            ]);
+                const message = await essSolar.readInData();
+                const batConvPower = EssSolar.getData(message, "EssInfoStatistics", "batconv_power");
+                const gridPower = EssSolar.getData(message, "EssInfoStatistics", "grid_power");
+                const loadPower = EssSolar.getData(message, "EssInfoStatistics", "load_power");
+                const pcs_pv_total_power = EssSolar.getData(message, "EssInfoStatistics", "pcs_pv_total_power");
+                const soc = EssSolar.getData(message, "EssCommonInfoBATT", "soc");
 
+
+
+
+                send([
+                    { payload: message },
+                    { payload: batConvPower },
+                    { payload: gridPower },
+                    { payload: loadPower },
+                    { payload: pcs_pv_total_power },
+                    { payload: soc }
+
+                ]);
+
+            }
+            catch (e: unknown) {
+                console.error(e);
+            }
 
             // Once finished, call 'done'.
             // This call is wrapped in a check that 'done' exists
@@ -71,7 +87,7 @@ const func = (RED: Red) => {
          * disconnecting from a remote system, they should register a listener 
          * on the close event.
         */
-        node.on('close', function (removed, done) {
+        node.on('close', function (removed: boolean, done: () => void) {
             if (removed) {
                 // This node has been disabled/deleted
             } else {
